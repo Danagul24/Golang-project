@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	"project/internal/models"
 	"project/internal/store"
@@ -30,9 +31,20 @@ func (c BrandsRepository) Create(ctx context.Context, brand *models.Brand) error
 	return nil
 }
 
-func (c BrandsRepository) All(ctx context.Context) ([]*models.Brand, error) {
+func (c BrandsRepository) All(ctx context.Context, filter *models.BrandFilter) ([]*models.Brand, error) {
 	brands := make([]*models.Brand, 0)
-	if err := c.conn.Select(&brands, "SELECT * FROM brands"); err != nil {
+	basicQuery := "SELECT * FROM brands"
+
+	if filter.Query != nil {
+		basicQuery = fmt.Sprintf("%s WHERE name ILIKE $1", basicQuery)
+
+		if err := c.conn.Select(&brands, basicQuery, "%"+*filter.Query+"%"); err != nil {
+			return nil, err
+		}
+		return brands, nil
+	}
+
+	if err := c.conn.Select(&brands, basicQuery); err != nil {
 		return nil, err
 	}
 	return brands, nil

@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	"project/internal/models"
 	"project/internal/store"
@@ -23,16 +24,28 @@ func newCarsRepository(conn *sqlx.DB) store.CarsRepository {
 }
 
 func (c CarsRepository) Create(ctx context.Context, car *models.Car) error {
-	_, err := c.conn.Exec("INSERT INTO cars VALUES ($1, $2, $3, &4, $5, &6)", car.Model, car.Brand, car.City, car.Year, car.Price, car.Description)
+	_, err := c.conn.Exec("INSERT INTO cars(model, brand_id, city, year, price, description)"+
+		" VALUES ($1, $2, $3, &4, $5, &6)", car.Model, car.BrandID, car.City, car.Year, car.Price, car.Description)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c CarsRepository) All(ctx context.Context) ([]*models.Car, error) {
+func (c CarsRepository) All(ctx context.Context, filter *models.CarFilter) ([]*models.Car, error) {
 	cars := make([]*models.Car, 0)
-	if err := c.conn.Select(&cars, "SELECT * FROM cars"); err != nil {
+	basicQuery := "SELECT * FROM cars"
+
+	if filter.Query != nil {
+		basicQuery = fmt.Sprintf("%s WHERE model ILIKE $1", basicQuery)
+
+		if err := c.conn.Select(&cars, basicQuery, "%"+*filter.Query+"%"); err != nil {
+			return nil, err
+		}
+		return cars, nil
+	}
+
+	if err := c.conn.Select(&cars, basicQuery); err != nil {
 		return nil, err
 	}
 	return cars, nil

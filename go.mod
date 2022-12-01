@@ -7,6 +7,7 @@ require (
 	github.com/go-chi/chi v1.5.4 // indirect
 	github.com/go-chi/render v1.0.2 // indirect
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible // indirect
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jackc/pgx v3.6.2+incompatible // indirect
 	github.com/jmoiron/sqlx v1.3.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

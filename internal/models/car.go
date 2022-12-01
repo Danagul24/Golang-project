@@ -1,13 +1,17 @@
 package models
 
-import "math/big"
+type (
+	Car struct {
+		ID          int    `json:"id" db:"id"`
+		Model       string `json:"model" db:"model"`
+		BrandID     int    `json:"brand_id" db:"brand_id"`
+		City        string `json:"city" db:"city"`
+		Year        int    `json:"year" db:"year"`
+		Price       int    `json:"price" db:"price"`
+		Description string `json:"description" db:"description"`
+	}
 
-type Car struct {
-	ID          int     `json:"id" db:"id"`
-	Model       string  `json:"model" db:"model"`
-	Brand       string  `json:"brand" db:"brand"`
-	City        string  `json:"city" db:"city"`
-	Year        int     `json:"year" db:"year"`
-	Price       big.Int `json:"price" db:"price"`
-	Description string  `json:"description" db:"description"`
-}
+	CarFilter struct {
+		Query *string `json:"query"`
+	}
+)
