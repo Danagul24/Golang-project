@@ -26,4 +26,6 @@ type CarsRepository interface {
 	ByID(ctx context.Context, id int) (*models.Car, error)
 	Update(ctx context.Context, car *models.Car) error
 	Delete(ctx context.Context, id int) error
+	Sort(ctx context.Context, sortType string) ([]*models.Car, error)
+	FilterByCity(ctx context.Context, filter string) ([]*models.Car, error)
 }

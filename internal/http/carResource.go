@@ -33,6 +33,8 @@ func (cr *CarResource) Routes() chi.Router {
 	r.Get("/{id}", cr.ByID)
 	r.Put("/", cr.UpdateCar)
 	r.Delete("/{id}", cr.DeleteCar)
+	r.Get("/{city}", cr.FilterCarsByCity)
+	r.Get("/sort_by={sortType}", cr.SortCars)
 	return r
 }
 
@@ -147,4 +149,44 @@ func (cr *CarResource) DeleteCar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cr.cache.Remove(id)
+}
+
+func (cr *CarResource) SortCars(w http.ResponseWriter, r *http.Request) {
+	sortType := chi.URLParam(r, "sortType")
+
+	sortedCarsFromCache, ok := cr.cache.Get(sortType)
+	if ok {
+		render.JSON(w, r, sortedCarsFromCache)
+		return
+	}
+
+	sortedCars, err := cr.store.Cars().Sort(r.Context(), sortType)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "DB error: %v", err)
+		return
+	}
+
+	cr.cache.Add(sortType, sortedCars)
+	render.JSON(w, r, sortedCars)
+}
+
+func (cr *CarResource) FilterCarsByCity(w http.ResponseWriter, r *http.Request) {
+	filter := chi.URLParam(r, "city")
+
+	filteredCarsFromCache, ok := cr.cache.Get(filter)
+	if ok {
+		render.JSON(w, r, filteredCarsFromCache)
+		return
+	}
+
+	filteredCars, err := cr.store.Cars().FilterByCity(r.Context(), filter)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "DB error: %v", err)
+		return
+	}
+
+	cr.cache.Add(filter, filteredCars)
+	render.JSON(w, r, filteredCars)
 }

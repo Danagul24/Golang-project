@@ -74,3 +74,26 @@ func (c CarsRepository) Delete(ctx context.Context, id int) error {
 	}
 	return nil
 }
+
+func (c CarsRepository) Sort(ctx context.Context, sortType string) ([]*models.Car, error) {
+	sortedCars := make([]*models.Car, 0)
+	if sortType == "model-asc" {
+		if err := c.conn.Select(&sortedCars, "SELECT * FROM cars ORDER BY model;"); err != nil {
+			return nil, err
+		}
+	}
+	if sortType == "price-asc" {
+		if err := c.conn.Select(&sortedCars, "SELECT * FROM cars ORDER BY price;"); err != nil {
+			return nil, err
+		}
+	}
+	return sortedCars, nil
+}
+
+func (c CarsRepository) FilterByCity(ctx context.Context, filter string) ([]*models.Car, error) {
+	filteredCars := make([]*models.Car, 0)
+	if err := c.conn.Select(&filteredCars, "SELECT * FROM cars WHERE city ILIKE $1", ""+filter+""); err != nil {
+		return nil, err
+	}
+	return filteredCars, nil
+}
