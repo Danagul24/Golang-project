@@ -1,4 +1,4 @@
-Golang project : Marketplace of cars(Kolesa)
+7Golang project : Marketplace of cars(Kolesa)
 
 Team members: 
 
@@ -13,4 +13,4 @@ Functionalities:
 4) Sorting cars by price asc and model name asc
 5) Filtering cars by city 
 6) Adding cars to favourites, showing the favourites and deleting cars from favourites
-Two queue caching
+7) Two queue caching
