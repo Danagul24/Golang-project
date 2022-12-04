@@ -1,0 +1,21 @@
+_id: req_3fcff4a18ade4902878a2f0c795775f5
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1670175542117
+created: 1669926224446
+url: http://localhost:8080/cars/13
+name: DELETE car
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1669932815065.625
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

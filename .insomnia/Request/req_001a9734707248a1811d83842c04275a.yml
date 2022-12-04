@@ -1,0 +1,21 @@
+_id: req_001a9734707248a1811d83842c04275a
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1670175277439
+created: 1669955187852
+url: http://localhost:8080/cars/sort_by=price-asc
+name: SORT by price
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1669926068779
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

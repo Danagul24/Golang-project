@@ -1,0 +1,21 @@
+_id: req_3ae4514b73e0494faa79dda65aa1de52
+type: Request
+parentId: fld_23b37633530c43389cf9487a29b20954
+modified: 1670174289285
+created: 1670167391158
+url: http://localhost:8080/cars/favourites
+name: SHOW list of favourite cars
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1669926068944.625
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

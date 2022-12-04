@@ -1,0 +1,28 @@
+_id: req_c99f5fae15874409990e8cec472bbe6a
+type: Request
+parentId: fld_d5ed56a97dc9410ba6d856040617b711
+modified: 1670175265914
+created: 1669836794179
+url: http://localhost:8080/brands
+name: ADD new brand
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name": "Volga"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1669926068991.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,29 @@
+_id: req_1b5925b9144e434a8a23c98fd544b55c
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1670175303823
+created: 1669926224429
+url: http://localhost:8080/cars
+name: UPDATE city of car
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"id" : 8,
+    	"city" : "Petropavlovsk"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1669932815062.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,21 @@
+_id: req_d4422ee2a8b74f9991c32e93ee6fb942
+type: Request
+parentId: fld_d5ed56a97dc9410ba6d856040617b711
+modified: 1670175267867
+created: 1669838915286
+url: http://localhost:8080/brands/7
+name: DELETE brand
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1669926068985.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

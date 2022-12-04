@@ -1,0 +1,21 @@
+_id: req_e96e3bbcf4ce47e2a2dbb8af9e2e51bc
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1669958234289
+created: 1669957241568
+url: http://localhost:8080/cars/almaty
+name: FILTER by city
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1669932815056.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
