@@ -34,7 +34,6 @@ func (s *Server) basicHandler() chi.Router {
 	r := chi.NewRouter()
 	brandsResource := NewBrandResources(s.store, s.cache)
 	r.Mount("/brands", brandsResource.Routes())
-	
 	carsResource := NewCarResource(s.store, s.cache)
 	r.Mount("/cars", carsResource.Routes())
 	return r

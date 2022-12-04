@@ -24,8 +24,8 @@ func newCarsRepository(conn *sqlx.DB) store.CarsRepository {
 }
 
 func (c CarsRepository) Create(ctx context.Context, car *models.Car) error {
-	_, err := c.conn.Exec("INSERT INTO cars(model, brand_id, city, year, price, description)"+
-		" VALUES ($1, $2, $3, &4, $5, &6)", car.Model, car.BrandID, car.City, car.Year, car.Price, car.Description)
+	_, err := c.conn.Exec("INSERT INTO cars (model, brand_id, city, year, price, description) VALUES ($1, $2, $3, $4, $5, $6)",
+		car.Model, car.BrandID, car.City, car.Year, car.Price, car.Description)
 	if err != nil {
 		return err
 	}
@@ -96,4 +96,47 @@ func (c CarsRepository) FilterByCity(ctx context.Context, filter string) ([]*mod
 		return nil, err
 	}
 	return filteredCars, nil
+}
+
+func (c CarsRepository) AddToFav(ctx context.Context, filter *models.CarFilter) error {
+	favouriteCar := new(models.Car)
+	basicQuery := "SELECT * FROM cars WHERE id = $1"
+
+	if filter.CarId != nil {
+		if err := c.conn.Get(favouriteCar, basicQuery, filter.CarId); err != nil {
+			return err
+		}
+	}
+
+	_, err := c.conn.Exec("INSERT INTO favourites(car_id) VALUES ($1)", favouriteCar.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c CarsRepository) DeleteFromFav(ctx context.Context, filter *models.CarFilter) error {
+	favouriteCar := new(models.Car)
+	basicQuery := "SELECT * FROM cars WHERE id = $1"
+
+	if filter.CarId != nil {
+		if err := c.conn.Get(favouriteCar, basicQuery, filter.CarId); err != nil {
+			return err
+		}
+	}
+
+	_, err := c.conn.Exec("DELETE FROM favourites WHERE id = $1", favouriteCar.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c CarsRepository) ShowFav(ctx context.Context) ([]*models.Car, error) {
+	favouriteCars := make([]*models.Car, 0)
+	err := c.conn.Select(&favouriteCars, "select cars.id, cars.model, cars.brand_id, cars.city, cars.year, cars.description from cars, favourites where cars.id =  favourites.car_id")
+	if err != nil {
+		return nil, err
+	}
+	return favouriteCars, nil
 }

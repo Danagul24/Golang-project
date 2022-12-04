@@ -35,6 +35,10 @@ func (cr *CarResource) Routes() chi.Router {
 	r.Delete("/{id}", cr.DeleteCar)
 	r.Get("/{city}", cr.FilterCarsByCity)
 	r.Get("/sort_by={sortType}", cr.SortCars)
+	r.Post("/favourites", cr.AddToFavourites)
+	r.Delete("/favourites", cr.DeleteFromFavourites)
+	r.Get("/favourites", cr.ShowFavourites)
+
 	return r
 }
 
@@ -52,7 +56,7 @@ func (cr *CarResource) CreateCar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cr.cache.Purge() // чистка кэша после создания бренда
+	cr.cache.Purge() // чистка кэша после добавление нового объявления
 
 	w.WriteHeader(http.StatusCreated)
 }
@@ -82,6 +86,7 @@ func (cr *CarResource) AllCars(w http.ResponseWriter, r *http.Request) {
 	}
 	render.JSON(w, r, cars)
 }
+
 func (cr *CarResource) ByID(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
@@ -149,6 +154,7 @@ func (cr *CarResource) DeleteCar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cr.cache.Remove(id)
+
 }
 
 func (cr *CarResource) SortCars(w http.ResponseWriter, r *http.Request) {
@@ -189,4 +195,52 @@ func (cr *CarResource) FilterCarsByCity(w http.ResponseWriter, r *http.Request) 
 
 	cr.cache.Add(filter, filteredCars)
 	render.JSON(w, r, filteredCars)
+}
+
+func (cr *CarResource) AddToFavourites(w http.ResponseWriter, r *http.Request) {
+	queryValues := r.URL.Query()
+	filter := &models.CarFilter{}
+	searchQuery, err := strconv.Atoi(queryValues.Get("id"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Unknown error: %v", err)
+	}
+
+	filter.CarId = &searchQuery
+
+	if err := cr.store.Cars().AddToFav(r.Context(), filter); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "DB error: %v", err)
+		return
+	}
+
+}
+
+func (cr *CarResource) DeleteFromFavourites(w http.ResponseWriter, r *http.Request) {
+	queryValues := r.URL.Query()
+	filter := &models.CarFilter{}
+	searchQuery, err := strconv.Atoi(queryValues.Get("id"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Unknown error: %v", err)
+	}
+
+	filter.CarId = &searchQuery
+
+	if err := cr.store.Cars().DeleteFromFav(r.Context(), filter); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "DB error: %v", err)
+		return
+	}
+}
+
+func (cr *CarResource) ShowFavourites(w http.ResponseWriter, r *http.Request) {
+	favouriteCars, err := cr.store.Cars().ShowFav(r.Context())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "DB error: %v", err)
+		return
+	}
+
+	render.JSON(w, r, favouriteCars)
 }

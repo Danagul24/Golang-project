@@ -28,4 +28,7 @@ type CarsRepository interface {
 	Delete(ctx context.Context, id int) error
 	Sort(ctx context.Context, sortType string) ([]*models.Car, error)
 	FilterByCity(ctx context.Context, filter string) ([]*models.Car, error)
+	AddToFav(ctx context.Context, filter *models.CarFilter) error
+	ShowFav(ctx context.Context) ([]*models.Car, error)
+	DeleteFromFav(ctx context.Context, filter *models.CarFilter) error
 }

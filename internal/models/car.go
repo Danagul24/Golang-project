@@ -13,5 +13,6 @@ type (
 
 	CarFilter struct {
 		Query *string `json:"query"`
+		CarId *int    `json:"id"`
 	}
 )
