@@ -1,4 +1,4 @@
-7Golang project : Marketplace of cars(Kolesa)
+Golang project : Marketplace of cars(Kolesa)
 
 Team members: 
 
