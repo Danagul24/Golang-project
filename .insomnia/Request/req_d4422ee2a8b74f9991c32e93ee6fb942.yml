@@ -1,16 +1,18 @@
 _id: req_d4422ee2a8b74f9991c32e93ee6fb942
 type: Request
 parentId: fld_d5ed56a97dc9410ba6d856040617b711
-modified: 1671529558672
+modified: 1672001842520
 created: 1669838915286
-url: http://localhost:8080/brands/7
+url: http://localhost:8080/brands/10
 name: DELETE brand
 description: ""
 method: DELETE
 body: {}
 parameters: []
 headers: []
-authentication: {}
+authentication:
+  type: oauth2
+  grantType: authorization_code
 metaSortKey: -1669926068985.25
 isPrivate: false
 settingStoreCookies: true

@@ -1,7 +1,7 @@
 _id: req_63bce8f9d18f4880bed94f2bacc991fd
 type: Request
 parentId: fld_d5ed56a97dc9410ba6d856040617b711
-modified: 1670175270011
+modified: 1672001874704
 created: 1669837487531
 url: "http://localhost:8080/brands "
 name: UPDATE name of new brand
@@ -11,14 +11,16 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"id" : 7,
-    	"name" : "Volg"
+    	"id" : 9,
+    	"name" : "Shevrolet"
     }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
-authentication: {}
+authentication:
+  type: oauth2
+  grantType: authorization_code
 metaSortKey: -1669926068988.375
 isPrivate: false
 settingStoreCookies: true
