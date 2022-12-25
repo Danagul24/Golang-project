@@ -1,4 +1,4 @@
-package http
+package resources
 
 import (
 	"encoding/json"
@@ -9,6 +9,7 @@ import (
 	lru "github.com/hashicorp/golang-lru"
 	"net/http"
 	"project/internal/models"
+	"project/internal/pkg"
 	"project/internal/store"
 	"strconv"
 )
@@ -25,18 +26,27 @@ func NewBrandResources(store store.Store, cache *lru.TwoQueueCache) *BrandResour
 	}
 }
 
-func (br *BrandResource) Routes() chi.Router {
+func (br *BrandResource) Routes(auth func(handler http.Handler) http.Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Post("/", br.CreateBrand)
 	r.Get("/", br.AllBrands)
 	r.Get("/{id}", br.ByID)
-	r.Put("/", br.UpdateBrand)
-	r.Delete("/{id}", br.DeleteBrand)
+
+	r.Group(func(r chi.Router) {
+		r.Use(auth)
+		r.Post("/", br.CreateBrand)
+		r.Put("/", br.UpdateBrand)
+		r.Delete("/{id}", br.DeleteBrand)
+	})
+
 	return r
 }
 
 func (br *BrandResource) CreateBrand(w http.ResponseWriter, r *http.Request) {
+	if !pkg.IsUserAdmin(r.Context(), w) {
+		return
+	}
+
 	brand := new(models.Brand)
 	if err := json.NewDecoder(r.Body).Decode(brand); err != nil {
 		w.WriteHeader(http.StatusUnprocessableEntity)
@@ -107,6 +117,10 @@ func (br *BrandResource) ByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (br *BrandResource) UpdateBrand(w http.ResponseWriter, r *http.Request) {
+	if !pkg.IsUserAdmin(r.Context(), w) {
+		return
+	}
+
 	brand := new(models.Brand)
 	if err := json.NewDecoder(r.Body).Decode(brand); err != nil {
 		w.WriteHeader(http.StatusUnprocessableEntity)
@@ -133,6 +147,10 @@ func (br *BrandResource) UpdateBrand(w http.ResponseWriter, r *http.Request) {
 }
 
 func (br *BrandResource) DeleteBrand(w http.ResponseWriter, r *http.Request) {
+	if !pkg.IsUserAdmin(r.Context(), w) {
+		return
+	}
+
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {

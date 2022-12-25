@@ -2,6 +2,7 @@ package http
 
 import (
 	lru "github.com/hashicorp/golang-lru"
+	"project/internal/pkg/auth"
 	"project/internal/store"
 )
 
@@ -22,5 +23,11 @@ func WithStore(store store.Store) ServerOption {
 func WithCache(cache *lru.TwoQueueCache) ServerOption {
 	return func(srv *Server) {
 		srv.cache = cache
+	}
+}
+
+func WithTokenManager(tokenManager auth.TokenManager) ServerOption {
+	return func(srv *Server) {
+		srv.tokenManager = tokenManager
 	}
 }

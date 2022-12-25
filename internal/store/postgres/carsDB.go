@@ -24,8 +24,8 @@ func newCarsRepository(conn *sqlx.DB) store.CarsRepository {
 }
 
 func (c CarsRepository) Create(ctx context.Context, car *models.Car) error {
-	_, err := c.conn.Exec("INSERT INTO cars (model, brand_id, city, year, price, description) VALUES ($1, $2, $3, $4, $5, $6)",
-		car.Model, car.BrandID, car.City, car.Year, car.Price, car.Description)
+	_, err := c.conn.Exec("INSERT INTO cars (model, user_id, brand_id, city, year, price, description) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+		car.Model, car.UserId, car.BrandID, car.City, car.Year, car.Price, car.Description)
 	if err != nil {
 		return err
 	}
@@ -46,6 +46,15 @@ func (c CarsRepository) All(ctx context.Context, filter *models.CarFilter) ([]*m
 	}
 
 	if err := c.conn.Select(&cars, basicQuery); err != nil {
+		return nil, err
+	}
+	return cars, nil
+}
+
+func (c CarsRepository) AllOfUser(ctx context.Context, userId int) ([]*models.Car, error) {
+	cars := make([]*models.Car, 0)
+
+	if err := c.conn.Select(&cars, "SELECT * FROM cars WHERE user_id = $1", userId); err != nil {
 		return nil, err
 	}
 	return cars, nil

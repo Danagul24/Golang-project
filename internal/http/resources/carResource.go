@@ -1,4 +1,4 @@
-package http
+package resources
 
 import (
 	"encoding/json"
@@ -9,6 +9,7 @@ import (
 	lru "github.com/hashicorp/golang-lru"
 	"net/http"
 	"project/internal/models"
+	"project/internal/pkg"
 	"project/internal/store"
 	"strconv"
 )
@@ -25,19 +26,24 @@ func NewCarResource(store store.Store, cache *lru.TwoQueueCache) *CarResource {
 	}
 }
 
-func (cr *CarResource) Routes() chi.Router {
+func (cr *CarResource) Routes(auth func(handler http.Handler) http.Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Post("/", cr.CreateCar)
-	r.Get("/", cr.AllCars)
+	r.Get("/all", cr.AllCars)
 	r.Get("/{id}", cr.ByID)
-	r.Put("/", cr.UpdateCar)
-	r.Delete("/{id}", cr.DeleteCar)
 	r.Get("/{city}", cr.FilterCarsByCity)
 	r.Get("/sort_by={sortType}", cr.SortCars)
 	r.Post("/favourites", cr.AddToFavourites)
 	r.Delete("/favourites", cr.DeleteFromFavourites)
 	r.Get("/favourites", cr.ShowFavourites)
+
+	r.Group(func(r chi.Router) {
+		r.Use(auth)
+		r.Post("/", cr.CreateCar)
+		r.Put("/", cr.UpdateCar)
+		r.Delete("/{id}", cr.DeleteCar)
+		r.Get("/", cr.AllUserCars)
+	})
 
 	return r
 }
@@ -49,6 +55,8 @@ func (cr *CarResource) CreateCar(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Unknown err: %v", err)
 		return
 	}
+
+	car.UserId = r.Context().Value(pkg.CtxKeyUser).(*models.AuthorizedInfo).Id
 
 	if err := cr.store.Cars().Create(r.Context(), car); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -83,6 +91,18 @@ func (cr *CarResource) AllCars(w http.ResponseWriter, r *http.Request) {
 	}
 	if searchQuery != "" {
 		cr.cache.Add(searchQuery, cars)
+	}
+	render.JSON(w, r, cars)
+}
+
+func (cr *CarResource) AllUserCars(w http.ResponseWriter, r *http.Request) {
+	userInfo := r.Context().Value(pkg.CtxKeyUser).(*models.AuthorizedInfo)
+
+	cars, err := cr.store.Cars().AllOfUser(r.Context(), userInfo.Id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "DB err: %v", err)
+		return
 	}
 	render.JSON(w, r, cars)
 }

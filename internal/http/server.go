@@ -6,16 +6,19 @@ import (
 	lru "github.com/hashicorp/golang-lru"
 	"log"
 	"net/http"
+	"project/internal/http/resources"
+	"project/internal/pkg/auth"
 	"project/internal/store"
 	"time"
 )
 
 type Server struct {
-	ctx         context.Context
-	idleConnsCH chan struct{}
-	store       store.Store
-	cache       *lru.TwoQueueCache
-	Address     string
+	ctx          context.Context
+	idleConnsCH  chan struct{}
+	store        store.Store
+	cache        *lru.TwoQueueCache
+	tokenManager auth.TokenManager
+	Address      string
 }
 
 func NewServer(ctx context.Context, opts ...ServerOption) *Server {
@@ -32,10 +35,17 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 func (s *Server) basicHandler() chi.Router {
 	r := chi.NewRouter()
-	brandsResource := NewBrandResources(s.store, s.cache)
-	r.Mount("/brands", brandsResource.Routes())
-	carsResource := NewCarResource(s.store, s.cache)
-	r.Mount("/cars", carsResource.Routes())
+	brandsResource := resources.NewBrandResources(s.store, s.cache)
+	r.Mount("/brands", brandsResource.Routes(s.userIdentity))
+
+	carsResource := resources.NewCarResource(s.store, s.cache)
+	r.Mount("/cars", carsResource.Routes(s.userIdentity))
+
+	usersResource := resources.NewUserResource(s.store, s.cache)
+	r.Mount("/users", usersResource.Routes(s.userIdentity))
+
+	authResource := resources.NewAuthResource(s.store, s.cache, s.tokenManager)
+	r.Mount("/auth", authResource.Routes())
 	return r
 }
 

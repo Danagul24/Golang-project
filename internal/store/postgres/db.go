@@ -10,6 +10,7 @@ type DB struct {
 	conn   *sqlx.DB
 	brands store.BrandsRepository
 	cars   store.CarsRepository
+	users  store.UsersRepository
 }
 
 func NewDB() store.Store {
