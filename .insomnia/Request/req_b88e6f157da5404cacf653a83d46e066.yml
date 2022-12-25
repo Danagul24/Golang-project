@@ -1,0 +1,26 @@
+_id: req_b88e6f157da5404cacf653a83d46e066
+type: Request
+parentId: fld_23b37633530c43389cf9487a29b20954
+modified: 1670174302933
+created: 1670173810471
+url: http://localhost:8080/cars/favourites
+name: DELETE from favourites
+description: ""
+method: DELETE
+body: {}
+parameters:
+  - id: pair_e1644c53d3464f409abffb970541ec6f
+    name: id
+    value: "5"
+    description: ""
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1669926068844.625
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

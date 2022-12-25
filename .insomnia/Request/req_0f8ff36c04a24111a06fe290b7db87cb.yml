@@ -1,0 +1,26 @@
+_id: req_0f8ff36c04a24111a06fe290b7db87cb
+type: Request
+parentId: fld_d5ed56a97dc9410ba6d856040617b711
+modified: 1670175331881
+created: 1669837406835
+url: http://localhost:8080/brands
+name: GET list of brands
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_10525b0bdb1847afba4f698f9ffe1376
+    name: query
+    value: v
+    description: ""
+    disabled: true
+headers: []
+authentication: {}
+metaSortKey: -1669926069029
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

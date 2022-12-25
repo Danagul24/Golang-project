@@ -1,0 +1,21 @@
+_id: req_70e8910743ca4969afe3ea692ed30eca
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1670175275010
+created: 1669953053288
+url: http://localhost:8080/cars/sort_by=model-asc
+name: SORT by model name
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1669926068829
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

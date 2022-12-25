@@ -1,0 +1,26 @@
+_id: req_f812f0d96254498199ed5db5480c5ec0
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1670175582669
+created: 1669926224421
+url: http://localhost:8080/cars
+name: GET list of cars
+description: ""
+method: GET
+body: {}
+parameters:
+  - id: pair_e1644c53d3464f409abffb970541ec6f
+    name: query
+    value: audi
+    description: ""
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1669932815106.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

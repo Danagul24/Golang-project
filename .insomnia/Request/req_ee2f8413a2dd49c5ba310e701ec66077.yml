@@ -1,0 +1,33 @@
+_id: req_ee2f8413a2dd49c5ba310e701ec66077
+type: Request
+parentId: fld_3e8cb94607304284ae0073be6774ac02
+modified: 1670175725048
+created: 1669926224413
+url: http://localhost:8080/cars
+name: ADD new car
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: >-
+    {
+    	"model": "Audi e-tron",
+    		"brand_id": 4,
+    		"city": "Almaty",
+    		"year": 2022,
+    		"price": 63500000,
+    		"description": "На гарантии Куплен у официального дилера Audi в РК Европеец Линия Design Легкосплавные диски Audi Sport «5 двойных спиц Edge», серого матового цвета, с частичной шлифовкой Защита бронепленкой"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1669932815068.75
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,26 @@
+_id: req_54262827a22f43aaacd3643aa362e4b2
+type: Request
+parentId: fld_23b37633530c43389cf9487a29b20954
+modified: 1670174293527
+created: 1669981117291
+url: http://localhost:8080/cars/favourites
+name: ADD car to favourites
+description: ""
+method: POST
+body: {}
+parameters:
+  - id: pair_e1644c53d3464f409abffb970541ec6f
+    name: id
+    value: "7"
+    description: ""
+    disabled: false
+headers: []
+authentication: {}
+metaSortKey: -1669926068894.625
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
