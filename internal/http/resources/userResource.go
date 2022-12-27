@@ -30,6 +30,7 @@ func (ur *UserResource) Routes(auth func(handler http.Handler) http.Handler) chi
 
 	r.Post("/registration", ur.CreateUser)
 	r.Group(func(r chi.Router) {
+		r.Use(auth)
 		r.Get("/", ur.AllUsers)
 		r.Put("/", ur.UpdateUser)
 		r.Delete("/{id}", ur.DeleteUser)

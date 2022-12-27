@@ -1,7 +1,7 @@
 _id: req_ee2f8413a2dd49c5ba310e701ec66077
 type: Request
 parentId: fld_3e8cb94607304284ae0073be6774ac02
-modified: 1670175725048
+modified: 1672000051689
 created: 1669926224413
 url: http://localhost:8080/cars
 name: ADD new car
@@ -20,9 +20,13 @@ body:
     }
 parameters: []
 headers:
-  - name: Content-Type
-    value: application/json
-authentication: {}
+  - name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzIwMDQxMTcsImlhdCI6MTY3MTk5NjkxNywidXNlciI6eyJpZCI6Mywicm9sZSI6ImNsaWVudCJ9fQ.G50lRbH_i_gnZFT_7ZUsG2CHms7lHbg0jmIE442Bp9g
+    id: pair_7c238913c19642ee9227eafaf94431a7
+    disabled: true
+authentication:
+  type: oauth2
+  grantType: authorization_code
 metaSortKey: -1669932815068.75
 isPrivate: false
 settingStoreCookies: true

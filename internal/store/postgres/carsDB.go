@@ -134,7 +134,7 @@ func (c CarsRepository) DeleteFromFav(ctx context.Context, filter *models.CarFil
 		}
 	}
 
-	_, err := c.conn.Exec("DELETE FROM favourites WHERE id = $1", favouriteCar.ID)
+	_, err := c.conn.Exec("DELETE FROM favourites WHERE car_id = $1", favouriteCar.ID)
 	if err != nil {
 		return err
 	}

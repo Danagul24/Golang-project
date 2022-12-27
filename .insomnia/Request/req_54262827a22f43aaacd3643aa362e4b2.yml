@@ -1,7 +1,7 @@
 _id: req_54262827a22f43aaacd3643aa362e4b2
 type: Request
 parentId: fld_23b37633530c43389cf9487a29b20954
-modified: 1670174293527
+modified: 1672001913721
 created: 1669981117291
 url: http://localhost:8080/cars/favourites
 name: ADD car to favourites
@@ -11,7 +11,7 @@ body: {}
 parameters:
   - id: pair_e1644c53d3464f409abffb970541ec6f
     name: id
-    value: "7"
+    value: "3"
     description: ""
     disabled: false
 headers: []
