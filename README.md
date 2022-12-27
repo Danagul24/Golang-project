@@ -13,10 +13,6 @@ Functionalities:
 4) Sorting cars by price asc and model name asc
 5) Filtering cars by city 
 6) Adding cars to favourites, showing the favourites and deleting cars from favourites
-<<<<<<< HEAD
-7) Two queue caching
-=======
 7) Registration of users 
 8) JWT authentication 
 
->>>>>>> e53398902ccd6c86691dcac516ad68ad3a4d5a55
