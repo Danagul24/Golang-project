@@ -11,3 +11,6 @@ Functionalities:
 7) Registration of users 
 8) JWT authentication 
 
+Twoqueue caching 
+DB: PostgreSQL
+
